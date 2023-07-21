@@ -23,29 +23,27 @@ temp = *a;
 
 void bubble_sort(int *array, size_t size)
 {
-int *copy = array;
-int temp;
-int i, j;
-int flag = 1;
+
+size_t i, len = size;
+int flag = 0;
 
 if (array == NULL || size < 2)
+{
 return;
+}
 
-
-while (flag)
+while (!flag)
 {
-flag = 0;
-for (i = 0; i < size; i++)
-{
-for (j = 0; j < (size - 1); j++)
-{
-if (copy[j] < copy[j + 1])
-{
-swap(&copy[j], &copy[j + 1]);
-print_array(array, size);
 flag = 1;
+for (i = 0; i < len - 1; i++)
+{
+if (array[i] > array[i + 1])
+{
+swap(&array[i], &array[i + 1]);
+print_array(array, size);
+flag = 0;
 }
 }
-}
+len--;
 }
 }
