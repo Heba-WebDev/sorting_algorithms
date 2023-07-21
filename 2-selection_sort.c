@@ -24,12 +24,12 @@ temp = *a;
 void selection_sort(int *array, size_t size)
 {
 
-int min, i, j;
+size_t min, i, j, len;
 
-for (i = 0; i < size; i++)
+for (i = 0; i < len; i++)
 {
 min = i;
-for (j = i + 1; j < size; j++)
+for (j = i + 1; j < len; j++)
 {
 if (array[j] < array[min])
 {
@@ -40,5 +40,6 @@ if (i != min)
 {
 swap(&array[i], &array[min]);
 }
+len--;
 }
 }
