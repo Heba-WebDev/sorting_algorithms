@@ -1,56 +1,62 @@
 #include "sort.h"
-
 /**
- * swap_nodes - swaps two nodes of a linked list
- * @head: head of the linked list
- * @node1: first node to swap
- * @node2: second node to swap
+ * swap_nodes - swaps two nodes in a doubly linked list
+ * @head: head of the list
+ * @node1: node to swap
+ * @node2: node to swap
  */
-void swap_nodes(listint_t **head, listint_t **node1, listint_t *node2)
+void swap_nodes(listint_t **head, listint_t *node1, listint_t *node2)
 {
+if (node1 == node2)
+return;
 
-(*node1)->next = node2->next;
-if (node2->next != NULL)
-node2->next->prev = *node1;
+node1->next = node2->next;
+node2->prev = node1->prev;
+node2->next = node1;
+node1->prev = node2;
 
-node2->prev = (*node1)->prev;
-node2->next = *node1;
-
-if ((*node1)->prev != NULL)
+if (node2->prev != NULL)
 {
-(*node1)->prev->next = node2;
+node2->prev->next = node2;
 }
 else
 {
 *head = node2;
 }
-(*node1)->prev = node2;
-*node1 = node2->prev;
+
+if (node1->next != NULL)
+{
+node1->next->prev = node1;
+}
 }
 
+
 /**
- * insertion_sort_list - sorts data
- * @list: a pointer to a list
- *
+ * insertion_sort_list - sorts a linked list by insertion sort algorithm
+ * @list: list to sort
  */
 
 void insertion_sort_list(listint_t **list)
 {
+int key;
+listint_t *temp, *node;
 
-listint_t *head, *previous, *temp;
-
-if (list == NULL || *list == NULL || (*list)->next == NULL)
+if (!list || !*list || !((*list)->next))
 return;
 
-for (head = (*list)->next; head != NULL; head = temp)
+for (node = (*list)->next; node; node = node->next)
 {
-temp = head->next;
-previous = head->prev;
-}
+key = node->n;
+temp = node;
 
-while (previous && head->n < previous->n)
+while (temp->prev && (temp->prev->n > key))
 {
-swap_nodes(list, &previous, head);
-print_list((const listint_t *)*list);
+swap_nodes(list, temp->prev, temp);
+if (temp->prev && temp->prev->n < key)
+{
+temp = temp->prev;
+}
+print_list(*list);
+}
 }
 }
